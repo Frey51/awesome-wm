@@ -5,6 +5,7 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
+local revelation=require("revelation")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
@@ -46,6 +47,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
+revelation.init()
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt"
@@ -237,7 +239,7 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
-
+    awful.key({ modkey,           }, "e",      revelation),
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -490,7 +492,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -567,7 +569,7 @@ autorunApps =
    "mbpfan",
    "compton",
    "udiskie",
-   "",
+   "xbindkeys",
 }
 if autorun then
    for app = 1, #autorunApps do
